@@ -145,18 +145,18 @@ exports.getAllReservations = getAllReservations;
   if (options.minimum_price_per_night) {
     queryParams.push(`${options.minimum_price_per_night}`);
     if (queryParams.length === 1) {
-      queryString += `WHERE properties.cost_per_night/100 > $${queryParams.length} `;
+      queryString += `WHERE properties.cost_per_night/100 >= $${queryParams.length} `;
     } else {
-      queryString += `AND properties.cost_per_night/100 > $${queryParams.length} `;
+      queryString += `AND properties.cost_per_night/100 >= $${queryParams.length} `;
     }
   }
 
   if (options.maximum_price_per_night) {
     queryParams.push(`${options.maximum_price_per_night}`);
     if (queryParams.length === 1) {
-      queryString += `WHERE properties.cost_per_night/100 < $${queryParams.length} `;
+      queryString += `WHERE properties.cost_per_night/100 =< $${queryParams.length} `;
     } else {
-      queryString += `AND properties.cost_per_night/100 < $${queryParams.length} `;
+      queryString += `AND properties.cost_per_night/100 =< $${queryParams.length} `;
     }
   }
 
@@ -166,7 +166,7 @@ exports.getAllReservations = getAllReservations;
 
   if (options.minimum_rating) {
     queryParams.push(`${options.minimum_rating}`);
-    queryString += `HAVING avg(property_reviews.rating) > $${queryParams.length} `;
+    queryString += `HAVING avg(property_reviews.rating) >= $${queryParams.length} `;
   }
 
   queryParams.push(limit);
